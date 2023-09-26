@@ -18,9 +18,17 @@ services:
       - postgres
     env_file:
       - stage-project/.env
+
+  next-app:
+    container_name: next-app
+    build:
+      context: ./stage-project-front
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - 3000:3000
+      - "3000:3000"
+    env_file:
+      - ./stage-project-front/.env
 
   nginx:
     container_name: nginx_app
@@ -30,7 +38,6 @@ services:
     depends_on:
       - postgres
       - node
-      - next-app
 
 volumes:
   postgres-volume:
